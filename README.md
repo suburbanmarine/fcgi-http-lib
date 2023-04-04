@@ -1,0 +1,1 @@
+A library with utilities for handling basic HTTP requests over FCGI 
