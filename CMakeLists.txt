@@ -8,6 +8,9 @@ add_library(fcgi-http-svr
 	http_util.cpp
 	http_common.cpp
 	http_req_error_handler.cpp
+	thread_base.cpp
+	http_req_jsonrpc.cpp
+
 )
 
 target_link_libraries(fcgi-http-svr
@@ -16,6 +19,9 @@ target_link_libraries(fcgi-http-svr
 		Boost::boost
 		Boost::filesystem
 		spdlog::spdlog
+		nlohmann_json::nlohmann_json
+
+		json-rpc-cxx
 )
 
 target_include_directories(fcgi-http-svr
