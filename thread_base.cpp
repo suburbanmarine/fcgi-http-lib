@@ -1,4 +1,4 @@
-#include "opaleye-util/thread_base.hpp"
+#include "http-bridge/thread_base.hpp"
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>

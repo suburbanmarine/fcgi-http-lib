@@ -8,7 +8,7 @@
 
 #include "http-bridge/http_req_callback_base.hpp"
 
-#include "jsonrpc-lean/server.h"
+#include <jsonrpccxx/server.hpp>
 
 #define NO_FCGI_DEFINES 1
 #include <fcgi_config.h>
@@ -36,7 +36,7 @@ public:
 
   void handle(FCGX_Request* const request) override;
 
-  void set_rpc_server(const std::shared_ptr<jsonrpc::Server>& server)
+  void set_rpc_server(const std::shared_ptr<jsonrpccxx::JsonRpc2Server>& server)
   {
     m_jsonrpc_server_ptr = server;
   }
@@ -48,7 +48,7 @@ protected:
   std::mutex m_jsonrpc_mutex;
 
   //idk if this is thread safe
-  std::shared_ptr<jsonrpc::Server> m_jsonrpc_server_ptr;
+  std::shared_ptr<jsonrpccxx::JsonRpc2Server> m_jsonrpc_server_ptr;
 
   //these need to be thread local
   std::vector<char> m_req_buf;
