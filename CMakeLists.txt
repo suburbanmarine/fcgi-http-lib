@@ -19,8 +19,9 @@ target_link_libraries(fcgi-http-svr
 		Boost::boost
 		Boost::filesystem
 		spdlog::spdlog
+		fcgi
+		
 		nlohmann_json::nlohmann_json
-
 		json-rpc-cxx
 )
 
