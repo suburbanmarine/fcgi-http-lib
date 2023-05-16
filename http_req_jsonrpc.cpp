@@ -13,6 +13,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
+#include <jsonrpccxx/server.hpp>
+
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/fmt.h>
 

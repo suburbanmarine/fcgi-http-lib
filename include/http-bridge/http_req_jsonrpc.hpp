@@ -8,8 +8,6 @@
 
 #include "http-bridge/http_req_callback_base.hpp"
 
-#include <jsonrpccxx/server.hpp>
-
 #define NO_FCGI_DEFINES 1
 #include <fcgi_config.h>
 #include <fcgiapp.h>
@@ -18,6 +16,12 @@
 #include <string>
 #include <vector>
 #include <mutex>
+
+namespace jsonrpccxx
+{
+  class JsonRpc2Server;
+}
+
 
 class http_req_jsonrpc : public http_req_callback_base
 {
