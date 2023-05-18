@@ -5,3 +5,77 @@
 */
 
 #include "http-bridge/http_req_callback_base.hpp"
+
+#include <http-bridge/http_common.hpp>
+
+#include <exception>
+
+HTTPException::HTTPException(const int code, const char msg[]) : std::runtime_error(msg), m_code(code)
+{
+
+}
+int HTTPException::get_code() const
+{
+    return m_code;
+}
+
+BadRequest::BadRequest() : HTTPException(http_common::STATUS_CODES::BAD_REQUEST, "Bad Request")
+{
+
+}
+BadRequest::BadRequest(const char msg[]) : HTTPException(http_common::STATUS_CODES::BAD_REQUEST, msg)
+{
+
+}
+
+NotFound::NotFound() : HTTPException(http_common::STATUS_CODES::NOT_FOUND, "Not Found")
+{
+
+}
+NotFound::NotFound(const char msg[]) : HTTPException(http_common::STATUS_CODES::NOT_FOUND, msg)
+{
+
+}
+
+MethodNotAllowed::MethodNotAllowed() : HTTPException(http_common::STATUS_CODES::METHOD_NOT_ALLOWED, "Method Not Allowed")
+{
+
+}
+MethodNotAllowed::MethodNotAllowed(const char msg[]) : HTTPException(http_common::STATUS_CODES::METHOD_NOT_ALLOWED, msg)
+{
+
+}
+
+InternalServerError::InternalServerError() : HTTPException(http_common::STATUS_CODES::INTERNAL_SERVER_ERROR, "Internal Error")
+{
+
+}
+InternalServerError::InternalServerError(const char msg[]) : HTTPException(http_common::STATUS_CODES::INTERNAL_SERVER_ERROR, msg)
+{
+
+}
+
+ServiceUnavailable::ServiceUnavailable() : HTTPException(http_common::STATUS_CODES::SERVICE_UNAVAILABLE, "Service Unavailable")
+{
+
+}
+ServiceUnavailable::ServiceUnavailable(const char msg[]) : HTTPException(http_common::STATUS_CODES::SERVICE_UNAVAILABLE, msg)
+{
+
+}
+
+http_req_callback_base::http_req_callback_base()
+{
+
+}
+
+http_req_callback_base::~http_req_callback_base()
+{
+
+}
+
+void http_req_callback_base::handle(FCGX_Request* const request)
+{
+    FCGX_PutS("Status: 500 Internal Error\r\n", request->out);
+    FCGX_Finish_r(request);
+}

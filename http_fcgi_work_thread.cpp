@@ -5,6 +5,7 @@
 */
 
 #include "http-bridge/http_fcgi_work_thread.hpp"
+#include "http-bridge/http_req_callback_base.hpp"
 
 #include "http-bridge/http_fcgi_svr.hpp"
 
