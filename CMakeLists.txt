@@ -11,6 +11,10 @@ add_library(fcgi-http-svr
 	thread_base.cpp
 	http_req_jsonrpc.cpp
 
+	path/Directory_tree.cpp
+	path/Directory_tree_node.cpp
+	path/Path_util.cpp
+
 )
 
 target_link_libraries(fcgi-http-svr

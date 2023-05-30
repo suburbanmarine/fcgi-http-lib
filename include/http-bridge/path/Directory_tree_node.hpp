@@ -5,7 +5,6 @@
 
 #include <boost/filesystem/path.hpp>
 
-#include <functional>
 #include <map>
 #include <memory>
 #include <string>
