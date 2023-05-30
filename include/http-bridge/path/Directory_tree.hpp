@@ -88,7 +88,6 @@ public:
 		Directory_tree_node::ptr curr_node = m_root;
 		for(auto q_it = std::next(query_path.begin()); q_it != query_path.end(); ++q_it)
 		{
-			std::cout << " q_it: " << q_it->string() << "\n";
 			Directory_tree_node::ptr next_node = curr_node->get_child_by_name(q_it->string());
 			if( ! next_node )
 			{
