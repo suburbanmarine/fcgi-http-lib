@@ -12,7 +12,6 @@
 #define NO_FCGI_DEFINES 1
 #include <fcgi_config.h>
 #include <fcgiapp.h>
-#include <fcgimisc.h>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
@@ -161,7 +160,7 @@ void http_fcgi_work_thread::work()
     }
   }
 
-  FCGX_Free(&request, TRUE);
+  FCGX_Free(&request, 1);
 
   SPDLOG_INFO("thread stoppping: {}", std::this_thread::get_id());
 }
