@@ -59,14 +59,14 @@ bool http_fcgi_svr::stop()
   bool ret = true;
   SPDLOG_INFO("Stopping server");
 
-  //shutdown FCGI
-  FCGX_ShutdownPending();
-
   //interrupt all threads
   for(size_t i = 0; i < m_thread_pool.size(); i++)
   {
     m_thread_pool[i]->interrupt();
   }
+
+  //shutdown FCGI
+  FCGX_ShutdownPending();
 
   //close socket
   if(m_sock_fd != -1)

@@ -54,7 +54,8 @@ void http_fcgi_work_thread::work()
 
   while( ! is_interrupted() )
   {
-    if(FCGX_Accept_r(&request) == 0)
+    const int accept_ret = FCGX_Accept_r(&request);
+    if(accept_ret == 0)
     {
       //check if running
       if( is_interrupted() )
