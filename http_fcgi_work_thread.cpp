@@ -160,7 +160,7 @@ void http_fcgi_work_thread::work()
     }
   }
 
-  FCGX_Free(&request, m_sock_fd);
+  FCGX_Free(&request, TRUE);
 
   SPDLOG_INFO("thread stoppping: {}", std::this_thread::get_id());
 }
