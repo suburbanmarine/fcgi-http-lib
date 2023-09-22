@@ -12,6 +12,7 @@
 #define NO_FCGI_DEFINES 1
 #include <fcgi_config.h>
 #include <fcgiapp.h>
+#include <fcgimisc.h>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
