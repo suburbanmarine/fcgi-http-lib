@@ -23,10 +23,15 @@ http_fcgi_svr::~http_fcgi_svr()
 
 bool http_fcgi_svr::start(const char* bind_addr, const size_t num_threads)
 {
+  return start(bind_addr, num_threads, 256);
+}
+
+bool http_fcgi_svr::start(const char* bind_addr, const size_t num_threads, const int backlog)
+{
   SPDLOG_INFO("Starting server");
 
   SPDLOG_INFO("Binding to {:s}", bind_addr);
-  m_sock_fd = FCGX_OpenSocket(bind_addr, 256);
+  m_sock_fd = FCGX_OpenSocket(bind_addr, backlog);
 
   if(m_sock_fd < 0)
   {
