@@ -26,7 +26,7 @@ bool http_fcgi_svr::start(const char* bind_addr, const size_t num_threads)
   SPDLOG_INFO("Starting server");
 
   SPDLOG_INFO("Binding to {:s}", bind_addr);
-  m_sock_fd = FCGX_OpenSocket(bind_addr, 1024);
+  m_sock_fd = FCGX_OpenSocket(bind_addr, 256);
 
   if(m_sock_fd < 0)
   {
