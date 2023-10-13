@@ -7,7 +7,6 @@
 #include "http-bridge/http_fcgi_svr.hpp"
 
 #include <spdlog/spdlog.h>
-#include <spdlog/async.h>
 
 http_fcgi_svr::http_fcgi_svr()
 {
@@ -136,7 +135,7 @@ std::shared_ptr<spdlog::logger> http_fcgi_svr::create_logger(const std::string& 
   auto logger = spdlog::get(logger_name);
   if( ! logger )
   {
-    logger = std::make_shared<spdlog::async_logger>(logger_name, std::begin(sinks), std::end(sinks), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+    logger = std::make_shared<spdlog::logger>(logger_name, std::begin(sinks), std::end(sinks));
     logger->set_level(spdlog::level::debug);
     spdlog::set_default_logger( logger );
   }
