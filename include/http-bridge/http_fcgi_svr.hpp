@@ -11,6 +11,8 @@
 
 #include "http-bridge/path/Directory_tree.hpp"
 
+#include <spdlog/spdlog.h>
+
 #define NO_FCGI_DEFINES 1
 #include <fcgi_config.h>
 #include <fcgiapp.h>
@@ -49,6 +51,12 @@ public:
 
   void register_cb_for_doc_uri(const char* doc_uri, const std::shared_ptr<http_req_callback_base>& cb);
   std::shared_ptr<http_req_callback_base> get_cb_for_doc_uri(const char* doc_uri);
+
+  // NOT MT safe - call before using library
+  static std::shared_ptr<spdlog::logger> setup_logger(const std::string& logger_name, const std::vector<spdlog::sink_ptr>& sinks);
+
+  // NOT MT safe - call before using library
+  static void register_logger(const std::shared_ptr<spdlog::logger>& logger);
 
 protected:
   int m_sock_fd;
