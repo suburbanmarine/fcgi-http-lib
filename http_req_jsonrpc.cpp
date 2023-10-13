@@ -88,7 +88,7 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
       //copy to a string to make jsonrpc-lean happy
       //maybe patch jsonrpc-lean to take a string-view
       m_req_str.assign(m_req_buf.data(), bytes_in);
-      SPDLOG_INFO("Request: {:.{}}",  m_req_buf.data(), bytes_in);
+      SPDLOG_DEBUG("Request: {:.{}}",  m_req_buf.data(), bytes_in);
     }
 
     // it wants CONTENT_TYPE == application/json - the application/json; charset=UTF-8 causes it to fail
@@ -107,7 +107,7 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
   //trace logging
   if(!result_str.empty())
   {
-    SPDLOG_INFO("Response: {:.{}}", result_str.data(), result_str.size());
+    SPDLOG_DEBUG("Response: {:.{}}", result_str.data(), result_str.size());
   }
   else
   {

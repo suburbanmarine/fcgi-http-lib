@@ -131,7 +131,7 @@ std::shared_ptr<http_req_callback_base> http_fcgi_svr::get_cb_for_doc_uri(const 
   return cb;
 }
 
-std::shared_ptr<spdlog::logger> http_fcgi_svr::setup_logger(const std::string& logger_name, const std::vector<spdlog::sink_ptr>& sinks)
+std::shared_ptr<spdlog::logger> http_fcgi_svr::create_logger(const std::string& logger_name, const std::vector<spdlog::sink_ptr>& sinks)
 {
   auto logger = spdlog::get(logger_name);
   if( ! logger )

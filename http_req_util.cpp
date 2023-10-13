@@ -88,5 +88,5 @@ void http_req_util::log_request_env()
 
     std::stringstream ss;
     boost::property_tree::write_json(ss, temp);
-    SPDLOG_DEBUG("request env: {:s}", ss.str());
+    SPDLOG_TRACE("request env: {:s}", ss.str());
 }

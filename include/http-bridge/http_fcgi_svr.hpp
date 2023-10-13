@@ -53,7 +53,7 @@ public:
   std::shared_ptr<http_req_callback_base> get_cb_for_doc_uri(const char* doc_uri);
 
   // NOT MT safe - call before using library
-  static std::shared_ptr<spdlog::logger> setup_logger(const std::string& logger_name, const std::vector<spdlog::sink_ptr>& sinks);
+  static std::shared_ptr<spdlog::logger> create_logger(const std::string& logger_name, const std::vector<spdlog::sink_ptr>& sinks);
 
   // NOT MT safe - call before using library
   static void register_logger(const std::shared_ptr<spdlog::logger>& logger);

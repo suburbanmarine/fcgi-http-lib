@@ -104,10 +104,10 @@ void http_fcgi_work_thread::work()
       // this is servers configured doc root for this uri
       const char* DOCUMENT_ROOT = FCGX_GetParam("DOCUMENT_ROOT", request.envp);
 
-      SPDLOG_DEBUG("REQUEST_METHOD: {:s}", REQUEST_METHOD);
-      SPDLOG_DEBUG("REQUEST_URI: {:s}", REQUEST_URI);
-      SPDLOG_DEBUG("DOCUMENT_URI: {:s}", DOCUMENT_URI);
-      SPDLOG_DEBUG("DOCUMENT_ROOT: {:s}", DOCUMENT_ROOT);
+      SPDLOG_TRACE("REQUEST_METHOD: {:s}", REQUEST_METHOD);
+      SPDLOG_TRACE("REQUEST_URI: {:s}", REQUEST_URI);
+      SPDLOG_TRACE("DOCUMENT_URI: {:s}", DOCUMENT_URI);
+      SPDLOG_TRACE("DOCUMENT_ROOT: {:s}", DOCUMENT_ROOT);
 
       //lookup request handler by uri
       std::shared_ptr<http_req_callback_base> req_cb;
@@ -134,7 +134,7 @@ void http_fcgi_work_thread::work()
         }
         catch(const std::exception& e)
         {
-          const char msg[]     = "Internal Error";
+          const char msg[]   = "Internal Error";
           const char msg_len = sizeof(msg) - 1;
           SPDLOG_ERROR("Caught exception: {:s}", e.what());
           FCGX_PutS("Content-Type: text/html\r\n", request.out);
@@ -147,7 +147,7 @@ void http_fcgi_work_thread::work()
       }
       else
       {
-        const char msg[]     = "Not Found";
+        const char msg[]   = "Not Found";
         const char msg_len = sizeof(msg) - 1;
 
         FCGX_PutS("Content-Type: text/html\r\n", request.out);
