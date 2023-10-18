@@ -125,6 +125,7 @@ void http_fcgi_work_thread::work()
         catch(const HTTPException& e)
         {
           SPDLOG_ERROR("Caught exception: {:s}", e.what());
+          
           FCGX_PutS("Content-Type: text/html\r\n", request.out);
           FCGX_FPrintF(request.out, "Content-Length: %d\r\n", strlen(e.what()));
           FCGX_FPrintF(request.out, "Status: %d %s\r\n", e.get_code(), e.what());
@@ -134,9 +135,23 @@ void http_fcgi_work_thread::work()
         }
         catch(const std::exception& e)
         {
+          SPDLOG_ERROR("Caught exception: {:s}", e.what());
+          
           const char msg[]   = "Internal Error";
           const char msg_len = sizeof(msg) - 1;
-          SPDLOG_ERROR("Caught exception: {:s}", e.what());
+          FCGX_PutS("Content-Type: text/html\r\n", request.out);
+          FCGX_FPrintF(request.out, "Content-Length: %d\r\n", msg_len);
+          FCGX_PutS("Status: 500 Internal Error\r\n", request.out);
+          FCGX_PutS("\r\n", request.out);
+          FCGX_FPrintF(request.out, "%s", msg);
+          FCGX_Finish_r(&request);
+        }
+        catch(...)
+        {
+          SPDLOG_ERROR("Caught unknown exception");
+
+          const char msg[]   = "Internal Error";
+          const char msg_len = sizeof(msg) - 1;
           FCGX_PutS("Content-Type: text/html\r\n", request.out);
           FCGX_FPrintF(request.out, "Content-Length: %d\r\n", msg_len);
           FCGX_PutS("Status: 500 Internal Error\r\n", request.out);
