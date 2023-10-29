@@ -7,6 +7,10 @@
 #pragma once
 
 const char APP_JSON[]   = "application/json";
+const char APP_CBOR[]   = "application/cbor";
+const char APP_GZIP[]   = "application/gzip";
+const char APP_ZLIB[]   = "application/zlib";
+
 const char IMAGE_GIF[]  = "image/gif";
 const char IMAGE_JPEG[] = "image/jpeg";
 const char IMAGE_PNG[]  = "image/png";
