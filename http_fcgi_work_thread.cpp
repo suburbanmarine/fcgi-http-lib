@@ -15,6 +15,7 @@
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
+#include <fmt/ostream.h>
 
 #include <cstring>
 
