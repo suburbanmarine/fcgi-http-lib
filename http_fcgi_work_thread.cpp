@@ -110,10 +110,7 @@ void http_fcgi_work_thread::work()
       SPDLOG_TRACE("DOCUMENT_ROOT: {:s}", DOCUMENT_ROOT);
 
       //lookup request handler by uri
-      std::shared_ptr<http_req_callback_base> req_cb;
-      {
-        req_cb = m_svr->get_cb_for_doc_uri(DOCUMENT_URI);
-      }
+      std::shared_ptr<http_req_callback_base> req_cb = m_svr->get_cb_for_doc_uri(DOCUMENT_URI);
 
       //handle
       if(req_cb)
