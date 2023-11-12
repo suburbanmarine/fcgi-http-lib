@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
-#include <fmt/std.h>
+#include <fmt/ostream.h>
 
 thread_base::thread_base() : m_keep_running(false)
 {
