@@ -15,7 +15,14 @@
 
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
-#include <fmt/ostream.h>
+
+#ifdef FMT_VERSION
+  #if FMT_VERSION < 70000
+    #include <fmt/ostream.h>
+  #else
+    #include <fmt/std.h>
+  #endif
+#endif
 
 #include <cstring>
 
