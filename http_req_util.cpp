@@ -100,13 +100,18 @@ bool http_req_util::parse_query_string(Query_map* const out_query_map)
 		return false;
 	}
 
-	out_query_map->clear();
-
 	std::shared_ptr<UriUriA> uri(new UriUriA, [](auto p){uriFreeUriMembersA(p); delete p;});
 	int ret = uriParseSingleUriA(uri.get(), REQUEST_URI, NULL);
 	if(ret != URI_SUCCESS)
 	{
 		return false;
+	}
+
+	if( ! (uri->query.first && uri->query.afterLast) )
+	{
+		// no query string
+		out_query_map->clear();
+		return true;
 	}
 
 	std::shared_ptr<UriQueryListA> queryList;
@@ -121,6 +126,8 @@ bool http_req_util::parse_query_string(Query_map* const out_query_map)
 		queryList = std::shared_ptr<UriQueryListA>(ptr, [](auto p){uriFreeQueryListA(p);});
 	}
 
+	//parse is ok, update the map
+	out_query_map->clear();
 	for(UriQueryListA const * node = queryList.get(); node != NULL; node = node->next)
 	{
 		if(node->key)
