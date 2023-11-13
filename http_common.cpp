@@ -8,8 +8,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
-
-#include <boost/range/algorithm_ext/erase.hpp>
+#include <boost/algorithm/string/trim.hpp>
 
 #include <cctype>
 #include <cstring>
@@ -54,7 +53,7 @@ bool http_common::parse_content_type(const char content_type[], Content_type* co
 
     std::string tmp = content_type;
 
-    boost::range::remove_erase_if(tmp, ::isspace);
+    boost::algorithm::trim_if(tmp, ::isspace);
 
     std::list<std::string> split_list;
     boost::split(split_list, tmp, boost::is_any_of(";"));
@@ -66,6 +65,7 @@ bool http_common::parse_content_type(const char content_type[], Content_type* co
 
     type->media_type = split_list.front();
     boost::to_lower(type->media_type);
+    boost::algorithm::trim_if(type->media_type, ::isspace);
     split_list.pop_front();
 
     std::vector<std::string> directive_list;
@@ -78,19 +78,31 @@ bool http_common::parse_content_type(const char content_type[], Content_type* co
             continue;
         }
 
+        boost::algorithm::trim_if(directive_list[0], ::isspace);
+
         if(directive_list[0] == "charset")
         {
-            if(directive_list.size() >= 2)
+            if(directive_list.size() == 2)
             {
                 type->charset = directive_list[1];
+                boost::algorithm::trim_if(type->charset, ::isspace);
                 boost::to_lower(type->charset);
+            }
+            else
+            {
+                return false;
             }
         }
         else if(directive_list[0] == "boundary")
         {
-            if(directive_list.size() >= 2)
+            if(directive_list.size() == 2)
             {
                 type->boundary = directive_list[1];
+                boost::algorithm::trim_if(type->boundary, ::isspace);
+            }
+            else
+            {
+                return false;
             }
         }
         else
