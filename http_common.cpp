@@ -64,8 +64,8 @@ bool http_common::parse_content_type(const char content_type[], Content_type* co
     }
 
     type->media_type = split_list.front();
-    boost::to_lower(type->media_type);
     boost::algorithm::trim_if(type->media_type, ::isspace);
+    boost::to_lower(type->media_type);
     split_list.pop_front();
 
     std::vector<std::string> directive_list;
