@@ -61,13 +61,14 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
   // Eg Content-type: application/json; charset=utf-8
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type
   // TODO: add a general parser for all content-type directives
-  { 
-    if(strlen(req_util.CONTENT_TYPE) == 0)
+  {
+    http_common::Content_type content_type;
+    if( ! http_common::parse_content_type(req_util.CONTENT_TYPE, &content_type) )
     {
-      throw UnsupportedMediaType();
-    }
+      throw UnsupportedMediaType("Could not parse CONTENT_TYPE");   
+    } 
 
-    if(strncmp(req_util.CONTENT_TYPE, APP_JSON, sizeof(APP_JSON)-1) != 0)
+    if(content_type.media_type != APP_JSON)
     {
       throw UnsupportedMediaType();
     }
