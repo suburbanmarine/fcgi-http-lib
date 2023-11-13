@@ -56,8 +56,11 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
     throw PayloadTooLarge();
   }
 
-  //validate CONTENT_TYPE, ignoring any optional charset
-  //TODO improve this check to make sure its actually a charset we drop and not something like app/json2
+  // Validate CONTENT_TYPE, ignoring any optional charset
+  // TODO improve this check to make sure its actually a charset we drop and not something like app/json2
+  // Eg Content-type: application/json; charset=utf-8
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type
+  // TODO: add a general parser for all content-type directives
   { 
     if(strlen(req_util.CONTENT_TYPE) == 0)
     {
