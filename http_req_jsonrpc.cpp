@@ -8,6 +8,7 @@
 #include "http-bridge/http_req_util.hpp"
 #include "http-bridge/http_util.hpp"
 #include "http-bridge/http_common.hpp"
+#include "http-bridge/content_type.hpp"
 
 #include <jsonrpccxx/server.hpp>
 
@@ -56,16 +57,16 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
   }
 
   //validate CONTENT_TYPE, ignoring any optional charset
+  //TODO improve this check to make sure its actually a charset we drop and not something like app/json2
   { 
-    const char app_jsonrpc[] = "application/json";
     if(strlen(req_util.CONTENT_TYPE) == 0)
     {
-      throw BadRequest("CONTENT_TYPE is invalid");
+      throw UnsupportedMediaType();
     }
 
-    if(strncmp(req_util.CONTENT_TYPE, app_jsonrpc, sizeof(app_jsonrpc)-1) != 0)
+    if(strncmp(req_util.CONTENT_TYPE, APP_JSON, sizeof(APP_JSON)-1) != 0)
     {
-      throw BadRequest("CONTENT_TYPE is invalid");
+      throw UnsupportedMediaType();
     }
   }
 
