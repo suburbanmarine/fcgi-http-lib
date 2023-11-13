@@ -41,7 +41,7 @@ public:
     PRECONDITION_FAILED        = 412, // (RFC 7232)
     PAYLOAD_TOO_LARGE          = 413, // (RFC 7231)
     URI_TOO_LONG               = 414, // (RFC 7231)
-    UNSUPPORTED_MEDIA          = 415, // TYPE (RFC 7231)
+    UNSUPPORTED_MEDIA_TYPE     = 415, // (RFC 7231)
     RANGE_NOT_SATISFIABLE      = 416, // (RFC 7233)
     EXPECTATION_FAILED         = 417,
     IM_A_TEAPOT                = 418, // (RFC 2324, RFC 7168)
