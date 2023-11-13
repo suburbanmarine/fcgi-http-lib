@@ -6,6 +6,12 @@
 
 #include "http-bridge/http_common.hpp"
 
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/split.hpp>
+
+#include <boost/range/algorithm_ext/erase.hpp>
+
+#include <cctype>
 #include <cstring>
 
 constexpr std::array<std::pair<char const * const, http_common::REQUEST_METHOD>, 9> http_common::REQUEST_METHOD_STR;
@@ -37,4 +43,56 @@ http_common::REQUEST_METHOD http_common::parse_req_method(const char req_method[
     }
 
     return REQUEST_METHOD::INVALID;
+}
+
+bool http_common::parse_content_type(const char content_type[], Content_type* const type)
+{
+    std::string tmp = content_type;
+
+    boost::range::remove_erase_if(tmp, ::isspace);
+
+    std::list<std::string> split_list;
+    boost::split(split_list, tmp, boost::is_any_of(";"));
+
+    if(split_list.empty())
+    {
+        return false;
+    }
+
+    type->media_type = split_list.front();
+    boost::to_lower(type->media_type);
+    split_list.pop_front();
+
+    std::vector<std::string> directive_list;
+    for(const std::string& chunk : split_list)
+    {
+        boost::split(directive_list, chunk, boost::is_any_of("="));
+
+        if(directive_list.empty())
+        {
+            continue;
+        }
+
+        if(directive_list[0] == "charset")
+        {
+            if(directive_list.size() >= 2)
+            {
+                type->charset = directive_list[1];
+                boost::to_lower(type->charset);
+            }
+        }
+        else if(directive_list[0] == "boundary")
+        {
+            if(directive_list.size() >= 2)
+            {
+                type->boundary = directive_list[1];
+            }
+        }
+        else
+        {
+            //unk
+        }
+    }
+
+    return true;
 }

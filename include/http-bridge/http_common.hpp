@@ -8,6 +8,7 @@
 
 #include <array>
 #include <utility>
+#include <string>
 
 class http_common
 {
@@ -86,6 +87,16 @@ public:
   };
 
   static REQUEST_METHOD parse_req_method(const char req_method[]);
+
+  class Content_type
+  {
+  public:
+    std::string media_type;
+    std::string charset;
+    std::string boundary;
+  };
+
+  static bool parse_content_type(const char content_type[], Content_type* const type);
 
 protected:
     static constexpr std::array<std::pair<char const * const, REQUEST_METHOD>, 9> REQUEST_METHOD_STR = 
