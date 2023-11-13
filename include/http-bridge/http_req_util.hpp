@@ -8,6 +8,10 @@
 #include <fcgi_config.h>
 #include <fcgiapp.h>
 
+#include <map>
+#include <optional>
+#include <string>
+
 class http_req_util
 {
 public:
@@ -17,6 +21,9 @@ public:
 	void load(FCGX_Request* const request);
 
 	void log_request_env();
+
+	typedef std::map<std::string, std::optional<std::string>> Query_map;
+	bool parse_query_string(Query_map* const out_query_map);
 
 	boost::filesystem::path doc_uri_path;
 	http_common::REQUEST_METHOD request_method_enum;

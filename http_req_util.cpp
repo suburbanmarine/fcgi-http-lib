@@ -3,6 +3,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
+#include <uriparser/Uri.h>
+
 #include <spdlog/spdlog.h>
 
 http_req_util::http_req_util()
@@ -89,4 +91,50 @@ void http_req_util::log_request_env()
     std::stringstream ss;
     boost::property_tree::write_json(ss, temp);
     SPDLOG_TRACE("request env: {:s}", ss.str());
+}
+
+bool http_req_util::parse_query_string(Query_map* const out_query_map)
+{
+	if( ! out_query_map )
+	{
+		return false;
+	}
+
+	out_query_map->clear();
+
+	std::shared_ptr<UriUriA> uri(new UriUriA, [](auto p){uriFreeUriMembersA(p); delete p;});
+	int ret = uriParseSingleUriA(uri.get(), REQUEST_URI, NULL);
+	if(ret != URI_SUCCESS)
+	{
+		return false;
+	}
+
+	std::shared_ptr<UriQueryListA> queryList;
+	int queryCount = 0;
+	{
+		UriQueryListA* ptr = NULL;
+		ret = uriDissectQueryMallocA(&ptr, &queryCount, uri->query.first, uri->query.afterLast);
+		if(ret != URI_SUCCESS)
+		{
+			return false;
+		}
+		queryList = std::shared_ptr<UriQueryListA>(ptr, [](auto p){uriFreeQueryListA(p);});
+	}
+
+	for(UriQueryListA const * node = queryList.get(); node != NULL; node = node->next)
+	{
+		if(node->key)
+		{
+			if(node->value)
+			{
+				out_query_map->insert(std::make_pair(node->key, node->value));
+			}
+			else
+			{
+				out_query_map->insert(std::make_pair(node->key, std::optional<std::string>()));
+			}
+		}
+	}
+
+	return true;
 }
