@@ -39,7 +39,7 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
   {
     if(req_util.request_method_enum != http_common::REQUEST_METHOD::POST)
     {
-      throw BadRequest("Only POST is accepted");
+      throw MethodNotAllowed("Only POST is accepted");
     }
   }
 
@@ -52,7 +52,7 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
 
   if((req_len < 0) || (req_len > MAX_REQ_LEN))
   {
-    throw BadRequest("CONTENT_LENGTH is invalid");
+    throw PayloadTooLarge();
   }
 
   //validate CONTENT_TYPE, ignoring any optional charset

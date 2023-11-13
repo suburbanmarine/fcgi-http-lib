@@ -46,6 +46,33 @@ MethodNotAllowed::MethodNotAllowed(const char msg[]) : HTTPException(http_common
 
 }
 
+PayloadTooLarge::PayloadTooLarge() : HTTPException(http_common::STATUS_CODES::PAYLOAD_TOO_LARGE, "Payload Too Large")
+{
+
+}
+PayloadTooLarge::PayloadTooLarge(const char msg[]) : HTTPException(http_common::STATUS_CODES::PAYLOAD_TOO_LARGE, msg)
+{
+
+}
+
+URITooLong::URITooLong() : HTTPException(http_common::STATUS_CODES::URI_TOO_LONG, "URI Too Long")
+{
+
+}
+URITooLong::URITooLong(const char msg[]) : HTTPException(http_common::STATUS_CODES::URI_TOO_LONG, msg)
+{
+
+}
+
+RequestHeaderFieldsTooLarge::RequestHeaderFieldsTooLarge() : HTTPException(http_common::STATUS_CODES::REQUEST_HEADER_FIELDS, "Request Header Fields Too Large")
+{
+
+}
+RequestHeaderFieldsTooLarge::RequestHeaderFieldsTooLarge(const char msg[]) : HTTPException(http_common::STATUS_CODES::REQUEST_HEADER_FIELDS, msg)
+{
+
+}
+
 InternalServerError::InternalServerError() : HTTPException(http_common::STATUS_CODES::INTERNAL_SERVER_ERROR, "Internal Error")
 {
 

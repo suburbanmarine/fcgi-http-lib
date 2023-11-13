@@ -43,6 +43,28 @@ class MethodNotAllowed : public HTTPException
   MethodNotAllowed(const char msg[]);
 };
 
+class PayloadTooLarge : public HTTPException
+{
+  public:
+  PayloadTooLarge();
+  PayloadTooLarge(const char msg[]);
+};
+
+class URITooLong : public HTTPException
+{
+  public:
+  URITooLong();
+  URITooLong(const char msg[]);
+};
+
+
+class RequestHeaderFieldsTooLarge : public HTTPException
+{
+  public:
+  RequestHeaderFieldsTooLarge();
+  RequestHeaderFieldsTooLarge(const char msg[]);
+};
+
 class InternalServerError : public HTTPException
 {
   public:
