@@ -95,8 +95,6 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
       SPDLOG_DEBUG("Request: {:.{}}",  m_req_buf.data(), bytes_in);
     }
 
-    // it wants CONTENT_TYPE == application/json - the application/json; charset=UTF-8 causes it to fail
-    // std::shared_ptr<jsonrpc::FormattedData> result = m_jsonrpc_server_ptr->HandleRequest(m_req_str, CONTENT_TYPE);
     try
     {
       result_str = m_jsonrpc_server_ptr->HandleRequest(m_req_str);
