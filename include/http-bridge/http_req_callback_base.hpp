@@ -57,6 +57,13 @@ class URITooLong : public HTTPException
   URITooLong(const char msg[]);
 };
 
+class UnsupportedMediaType : public HTTPException
+{
+  public:
+  UnsupportedMediaType();
+  UnsupportedMediaType(const char msg[]);
+};
+
 
 class RequestHeaderFieldsTooLarge : public HTTPException
 {

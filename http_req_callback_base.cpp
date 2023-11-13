@@ -64,6 +64,15 @@ URITooLong::URITooLong(const char msg[]) : HTTPException(http_common::STATUS_COD
 
 }
 
+UnsupportedMediaType::UnsupportedMediaType() : HTTPException(http_common::STATUS_CODES::UNSUPPORTED_MEDIA_TYPE, "Unsupported Media Type")
+{
+
+}
+UnsupportedMediaType::UnsupportedMediaType(const char msg[]) : HTTPException(http_common::STATUS_CODES::UNSUPPORTED_MEDIA_TYPE, msg)
+{
+
+}
+
 RequestHeaderFieldsTooLarge::RequestHeaderFieldsTooLarge() : HTTPException(http_common::STATUS_CODES::REQUEST_HEADER_FIELDS, "Request Header Fields Too Large")
 {
 
