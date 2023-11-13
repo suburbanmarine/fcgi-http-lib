@@ -47,6 +47,11 @@ http_common::REQUEST_METHOD http_common::parse_req_method(const char req_method[
 
 bool http_common::parse_content_type(const char content_type[], Content_type* const type)
 {
+    if( (!content_type) || (content_type[0]=='\0') )
+    {
+        return false;
+    }
+
     std::string tmp = content_type;
 
     boost::range::remove_erase_if(tmp, ::isspace);
