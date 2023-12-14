@@ -117,7 +117,7 @@ public:
 		}
 	
 		auto it = m_children.begin();
-		std::next(it, idx);
+		it      = std::next(it, idx);
 
 		return it->second;
 	}
