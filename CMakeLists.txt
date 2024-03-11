@@ -16,7 +16,6 @@ add_library(fcgi-http-svr
 	src/http_util.cpp
 	src/http_common.cpp
 	src/http_req_error_handler.cpp
-	src/thread_base.cpp
 	src/http_req_jsonrpc.cpp
 
 	src/path/Directory_tree.cpp
@@ -29,6 +28,8 @@ add_library(fcgi-http-svr
 
 target_link_libraries(fcgi-http-svr
 	PUBLIC
+
+		emb-lin-util
 
 		Boost::boost
 		Boost::filesystem
@@ -45,10 +46,6 @@ target_include_directories(fcgi-http-svr
 		include
 	PRIVATE
 		${CMAKE_CURRENT_BINARY_DIR}
-)
-
-target_compile_options(fcgi-http-svr
-	PUBLIC
 )
 
 set_target_properties(fcgi-http-svr

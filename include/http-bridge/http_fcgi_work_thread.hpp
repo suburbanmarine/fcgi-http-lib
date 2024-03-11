@@ -8,9 +8,9 @@
 
 #include "http-bridge/http_fcgi_svr_fwd.hpp"
 
-#include "http-bridge/thread_base.hpp"
+#include "emb-lin-util/Thread_base.hpp"
 
-class http_fcgi_work_thread : public thread_base
+class http_fcgi_work_thread : public Thread_base
 {
 public:
 
