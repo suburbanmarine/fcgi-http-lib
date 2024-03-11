@@ -52,6 +52,13 @@ PROPERTIES
 )
 
 INSTALL(
+	DIRECTORY
+		include/
+	DESTINATION
+		include
+)
+
+INSTALL(
 	TARGETS
 		fcgi-http-svr
 	DESTINATION
