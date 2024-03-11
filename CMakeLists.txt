@@ -4,22 +4,26 @@ project(fcgi-http-svr
 	LANGUAGES C CXX
 )
 
-add_library(fcgi-http-svr
-	content_type.cpp
-	http_fcgi_svr.cpp
-	http_fcgi_work_thread.cpp
-	http_req_callback_base.cpp
-	http_req_callback_file.cpp
-	http_req_util.cpp
-	http_util.cpp
-	http_common.cpp
-	http_req_error_handler.cpp
-	thread_base.cpp
-	http_req_jsonrpc.cpp
+configure_file(./src/version.hpp.in version.hpp)
 
-	path/Directory_tree.cpp
-	path/Directory_tree_node.cpp
-	path/Path_util.cpp
+add_library(fcgi-http-svr
+	src/content_type.cpp
+	src/http_fcgi_svr.cpp
+	src/http_fcgi_work_thread.cpp
+	src/http_req_callback_base.cpp
+	src/http_req_callback_file.cpp
+	src/http_req_util.cpp
+	src/http_util.cpp
+	src/http_common.cpp
+	src/http_req_error_handler.cpp
+	src/thread_base.cpp
+	src/http_req_jsonrpc.cpp
+
+	src/path/Directory_tree.cpp
+	src/path/Directory_tree_node.cpp
+	src/path/Path_util.cpp
+
+	src/version.cpp
 
 )
 
@@ -39,6 +43,8 @@ target_link_libraries(fcgi-http-svr
 target_include_directories(fcgi-http-svr
 	PUBLIC
 		include
+	PRIVATE
+		${CMAKE_CURRENT_BINARY_DIR}
 )
 
 target_compile_options(fcgi-http-svr
