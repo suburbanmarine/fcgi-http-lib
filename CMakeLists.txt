@@ -41,6 +41,11 @@ target_link_libraries(fcgi-http-svr
 		json-rpc-cxx
 )
 
+target_compile_definitions(fcgi-http-svr
+PRIVATE
+	NO_FCGI_DEFINES=1
+)
+
 target_include_directories(fcgi-http-svr
 	PUBLIC
 		include
