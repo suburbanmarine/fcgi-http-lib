@@ -1,3 +1,9 @@
+project(fcgi-http-svr
+	VERSION 0.1.0
+	DESCRIPTION "FastCGI utility library for C++"
+	LANGUAGES C CXX
+)
+
 add_library(fcgi-http-svr
 	content_type.cpp
 	http_fcgi_svr.cpp
@@ -37,6 +43,12 @@ target_include_directories(fcgi-http-svr
 
 target_compile_options(fcgi-http-svr
 	PUBLIC
+)
+
+set_target_properties(fcgi-http-svr
+PROPERTIES
+	VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
+	SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
 INSTALL(
