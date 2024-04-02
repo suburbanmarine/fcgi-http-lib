@@ -51,7 +51,7 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
     }
     default:
     {
-      throw MethodNotAllowed("Only POST is accepted");
+      throw MethodNotAllowed("Only POST and OPTIONS are accepted");
       break;
     }
   }
@@ -68,6 +68,7 @@ void http_req_jsonrpc::handle_req_option(FCGX_Request* const request, const http
   FCGX_PutS("Access-Control-Allow-Methods: POST\r\n"        , request->out);
   FCGX_PutS("Access-Control-Allow-Headers: Content-Type\r\n", request->out);
   FCGX_PutS("Access-Control-Max-Age: 86400\r\n"             , request->out);
+  FCGX_PutS("\r\n", request->out);
 }
 void http_req_jsonrpc::handle_req_post(FCGX_Request* const request, const http_req_util& req_util)
 {
