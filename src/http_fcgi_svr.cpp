@@ -61,7 +61,7 @@ bool http_fcgi_svr::start(const char* bind_addr, const size_t num_threads, const
 
 bool http_fcgi_svr::stop()
 {
-  bool ret = true;
+  bool fret = true;
   SPDLOG_INFO("Stopping server");
 
   //interrupt all threads
@@ -80,14 +80,14 @@ bool http_fcgi_svr::stop()
     if(ret != 0)
     {
       SPDLOG_ERROR("Error shutting down socket: {:d}", errno);
-      ret = false;
+      fret = false;
     }
 
     ret = close(m_sock_fd);
     if(ret != 0)
     {
       SPDLOG_ERROR("Error closing socket: {:d}", errno);
-      ret = false;
+      fret = false;
     }
     m_sock_fd = -1;
   }
@@ -102,7 +102,7 @@ bool http_fcgi_svr::stop()
 
   SPDLOG_INFO("Server stopped");
 
-  return ret;
+  return fret;
 }
 
 void http_fcgi_svr::register_cb_for_doc_uri(const char* doc_uri, const std::shared_ptr<http_req_callback_base>& cb)
