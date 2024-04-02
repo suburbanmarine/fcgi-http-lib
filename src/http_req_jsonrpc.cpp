@@ -37,13 +37,40 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
   //verify content size is sane
   // req_util.CONTENT_LENGTH
 
+  switch(req_util.request_method_enum)
   {
-    if(req_util.request_method_enum != http_common::REQUEST_METHOD::POST)
+    case http_common::REQUEST_METHOD::OPTIONS:
+    {
+      handle_req_option(request, req_util);
+      break;
+    }
+    case http_common::REQUEST_METHOD::POST:
+    {
+      handle_req_post(request, req_util);
+      break;      
+    }
+    default:
     {
       throw MethodNotAllowed("Only POST is accepted");
+      break;
     }
   }
 
+  FCGX_Finish_r(request);
+}
+
+void http_req_jsonrpc::handle_req_option(FCGX_Request* const request, const http_req_util& req_util)
+{
+  // TODO check REQUEST_URI for scope
+  // Access-Control-Request-Method == PUT
+  // Access-Control-Request-Headers == Content-Type
+  FCGX_PutS("Access-Control-Allow-Origin: *\r\n"            , request->out);
+  FCGX_PutS("Access-Control-Allow-Methods: POST\r\n"        , request->out);
+  FCGX_PutS("Access-Control-Allow-Headers: Content-Type\r\n", request->out);
+  FCGX_PutS("Access-Control-Max-Age: 86400\r\n"             , request->out);
+}
+void http_req_jsonrpc::handle_req_post(FCGX_Request* const request, const http_req_util& req_util)
+{
   int req_len = 0;
   int ret = sscanf(req_util.CONTENT_LENGTH, "%d", &req_len);
   if(ret != 1)
@@ -140,6 +167,5 @@ void http_req_jsonrpc::handle(FCGX_Request* const request)
 
     //print response body
     FCGX_PutStr(result_str.data(), result_str.size(), request->out);
-  }
-  FCGX_Finish_r(request);
+  } 
 }

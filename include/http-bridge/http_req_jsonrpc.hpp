@@ -8,6 +8,7 @@
 
 #include "http-bridge/http_req_callback_base.hpp"
 #include "http-bridge/http_req_jsonrpc_fwd.hpp"
+#include "http-bridge/http_req_util_fwd.hpp"
 
 #define NO_FCGI_DEFINES 1
 #include <fcgi_config.h>
@@ -41,6 +42,9 @@ public:
   }
 
 protected:
+
+  void handle_req_option(FCGX_Request* const request, const http_req_util& req_util);
+  void handle_req_post(FCGX_Request* const request, const http_req_util& req_util);
 
   static constexpr int MAX_REQ_LEN = 16*1024;
 
