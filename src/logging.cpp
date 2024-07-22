@@ -1,3 +1,4 @@
+#include <http-bridge/logging.hpp>
 
 namespace http_bridge
 {
