@@ -23,6 +23,7 @@ add_library(fcgi-http-svr
 	src/path/Directory_tree_fwd.cpp
 	src/path/Path_util.cpp
 
+	src/logging.cpp
 	src/version.cpp
 
 )
