@@ -20,6 +20,7 @@ add_library(fcgi-http-svr
 
 	src/path/Directory_tree.cpp
 	src/path/Directory_tree_node.cpp
+	src/path/Directory_tree_fwd.cpp
 	src/path/Path_util.cpp
 
 	src/version.cpp
