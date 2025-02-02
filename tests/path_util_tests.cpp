@@ -13,7 +13,7 @@ TEST(Path_util, num_elements)
 
 TEST(Path_util, trailing_element_is_dir)
 {
-	EXPECT_FALSE(Path_util::trailing_element_is_dir(""));
+	EXPECT_TRUE(Path_util::trailing_element_is_dir(""));
 	EXPECT_TRUE(Path_util::trailing_element_is_dir("/"));
 	EXPECT_TRUE(Path_util::trailing_element_is_dir("/."));
 	
