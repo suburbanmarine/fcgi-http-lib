@@ -10,6 +10,7 @@
 */
 
 #include "http-bridge/path/Path_util.hpp"
+#include <iostream>
 
 size_t Path_util::num_elements(const boost::filesystem::path& path)
 {
@@ -18,7 +19,15 @@ size_t Path_util::num_elements(const boost::filesystem::path& path)
 
 bool Path_util::trailing_element_is_dir(const boost::filesystem::path& path)
 {
-	return path.rbegin()->string() == ".";
+	if(path.empty())
+	{
+		return true;
+	}
+
+	std::cout << "path: '" << path << "' end: '" << path.rbegin()->string() << "'" << std::endl;
+	
+	const std::string last = path.rbegin()->string();
+	return (last == ".") || (last == "/") || (last.empty());
 }
 
 // returns true if base_path is a parent path or identical to req_path
