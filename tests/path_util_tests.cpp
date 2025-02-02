@@ -42,6 +42,7 @@ TEST(Path_util, is_parent_path)
 	EXPECT_FALSE(Path_util::is_parent_path("/foo/1/baz", "/foo/2/baz"));
 
 	EXPECT_FALSE(Path_util::is_parent_path("/foo/bar/baz", "/foo/bar/../work"));
+	EXPECT_TRUE(Path_util::is_parent_path("/foo/bar/baz", "/foo/bar/baz/foo/../../baz/work"));
 
 	EXPECT_TRUE(Path_util::is_parent_path("/foo/work/../baz", "/foo/baz/bar"));
 }
