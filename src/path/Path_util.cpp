@@ -10,28 +10,29 @@
 */
 
 #include "http-bridge/path/Path_util.hpp"
-#include <iostream>
+// #include <iostream>
 
-size_t Path_util::num_elements(const boost::filesystem::path& path)
+size_t Path_util::num_elements(const std::filesystem::path& path)
 {
 	return std::distance(path.begin(), path.end());
 }
 
-bool Path_util::trailing_element_is_dir(const boost::filesystem::path& path)
+bool Path_util::trailing_element_is_dir(const std::filesystem::path& path)
 {
 	if(path.empty())
 	{
 		return true;
 	}
 
-	std::cout << "path: '" << path << "' end: '" << path.rbegin()->string() << "'" << std::endl;
+	const std::string last = std::prev(path.end())->string();
 	
-	const std::string last = path.rbegin()->string();
+	// std::cout << "path: '" << path << "' end: '" << last << "'" << std::endl;
+	
 	return (last == ".") || (last == "/") || (last.empty());
 }
 
 // returns true if base_path is a parent path or identical to req_path
-bool Path_util::is_parent_path(const boost::filesystem::path& base_path, const boost::filesystem::path& req_path)
+bool Path_util::is_parent_path(const std::filesystem::path& base_path, const std::filesystem::path& req_path)
 {
 	if( base_path.empty() )
 	{
@@ -53,29 +54,26 @@ bool Path_util::is_parent_path(const boost::filesystem::path& base_path, const b
 		throw std::domain_error("must be absolute path");
 	}
 
-	//base path must be equal to or shorter than req_path
-	if(base_path.size() > req_path.size())
+	const std::filesystem::path normal_base_path = base_path.lexically_normal();
+	const std::filesystem::path normal_req_path  = req_path.lexically_normal();
+
+	const std::filesystem::path prox_path = normal_req_path.lexically_proximate(normal_base_path);
+
+	// std::cout << "base_path: " << base_path << std::endl;
+	// std::cout << "req_path: "  << req_path  << std::endl;
+	// std::cout << "normal_base_path: " << normal_base_path << std::endl;
+	// std::cout << "normal_req_path: "  << normal_req_path  << std::endl;
+	// std::cout << "prox_path: "  << prox_path  << std::endl;
+	// std::cout << std::endl;
+
+	if( prox_path.empty() )
 	{
-		return false;
+		return true;
 	}
 
-	const bool base_path_ends_in_dir = trailing_element_is_dir(base_path);
-
-	auto b_it = base_path.begin();
-	auto r_it = req_path.begin();
-	for(b_it = base_path.begin(), r_it = req_path.begin(); b_it != base_path.end(); ++b_it, ++r_it)
+	if(prox_path.begin()->string() == "..")
 	{
-		//if we end in a dir, are at end of base_path, and have matched so far, we match
-		if(base_path_ends_in_dir && (std::next(b_it) == base_path.end()))
-		{
-			return true;
-		}
-
-		//if this segment does not match, we do not match
-		if(*b_it != *r_it)
-		{
-			return false;
-		}
+		return false;
 	}
 
 	return true;

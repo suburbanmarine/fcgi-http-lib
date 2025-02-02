@@ -34,7 +34,6 @@ target_link_libraries(fcgi-http-svr
 		emb-lin-util
 
 		Boost::boost
-		Boost::filesystem
 		spdlog::spdlog
 		fcgi
 		uriparser

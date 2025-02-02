@@ -14,12 +14,11 @@
 #include "Directory_tree_fwd.hpp"
 #include "Path_util.hpp"
 
-#include <boost/filesystem/path.hpp>
-
+#include <filesystem>
+#include <iosfwd>
 #include <map>
 #include <memory>
 #include <string>
-#include <iosfwd>
 
 class Directory_tree_node : public std::enable_shared_from_this<Directory_tree_node>
 {
@@ -53,12 +52,12 @@ public:
 
 	}
 
-	static Directory_tree_node::ptr create(const Directory_tree_node::ptr& parent, const boost::filesystem::path& full_path)
+	static Directory_tree_node::ptr create(const Directory_tree_node::ptr& parent, const std::filesystem::path& full_path)
 	{
 		return Directory_tree_node::ptr(new Directory_tree_node(parent, full_path));
 	}
 
-	static Directory_tree_node::ptr create(const Directory_tree_node::ptr& parent, const boost::filesystem::path& full_path, const Data::ptr& data)
+	static Directory_tree_node::ptr create(const Directory_tree_node::ptr& parent, const std::filesystem::path& full_path, const Data::ptr& data)
 	{
 		return Directory_tree_node::ptr(new Directory_tree_node(parent, full_path, data));
 	}
@@ -73,7 +72,7 @@ public:
 		return m_name;
 	}
 
-	const boost::filesystem::path& path() const
+	const std::filesystem::path& path() const
 	{
 		return m_full_path;
 	}
@@ -83,7 +82,7 @@ public:
 		return ! m_children.empty();
 	}
 
-	bool is_path(const boost::filesystem::path& full_path) const
+	bool is_path(const std::filesystem::path& full_path) const
 	{
 		return m_full_path == full_path;
 	}
@@ -93,7 +92,7 @@ public:
 		return m_name == name;
 	}
 
-	Directory_tree_node::ptr create_child(const boost::filesystem::path& child_path)
+	Directory_tree_node::ptr create_child(const std::filesystem::path& child_path)
 	{
 		Directory_tree_node::ptr this_node = shared_from_this();
 
@@ -150,14 +149,14 @@ public:
 
 protected:
 
-	Directory_tree_node(const Directory_tree_node::ptr& parent, const boost::filesystem::path& full_path)
+	Directory_tree_node(const Directory_tree_node::ptr& parent, const std::filesystem::path& full_path)
 	{
 		m_parent    = parent;
 		m_full_path = full_path;
 		m_name      = full_path.filename().string();
 	}
 
-	Directory_tree_node(const Directory_tree_node::ptr& parent, const boost::filesystem::path& full_path, const Data::ptr& data)
+	Directory_tree_node(const Directory_tree_node::ptr& parent, const std::filesystem::path& full_path, const Data::ptr& data)
 	{
 		m_parent    = parent;
 		m_full_path = full_path;
@@ -166,7 +165,7 @@ protected:
 	}
 
 	//For debugging, this is the full path the node was registered with
-	boost::filesystem::path m_full_path;
+	std::filesystem::path m_full_path;
 
 	//The name of this node, eg filename / leaf name
 	//Will be . if this a dir node

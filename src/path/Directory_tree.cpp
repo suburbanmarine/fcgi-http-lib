@@ -14,7 +14,7 @@
 #include <sstream>
 #include <ostream>
 
-Directory_tree_node::ptr Directory_tree::set_node(const boost::filesystem::path& full_path, const Directory_tree_node::Data::ptr& data)
+Directory_tree_node::ptr Directory_tree::set_node(const std::filesystem::path& full_path, const Directory_tree_node::Data::ptr& data)
 {
 	if( ! full_path.is_absolute() )
 	{
@@ -27,7 +27,7 @@ Directory_tree_node::ptr Directory_tree::set_node(const boost::filesystem::path&
 	}
 
 	Directory_tree_node::ptr curr_node = m_root;
-	boost::filesystem::path curr_path  = m_root->path();
+	std::filesystem::path curr_path  = m_root->path();
 
 	for(auto q_it = std::next(full_path.begin()); q_it != full_path.end(); ++q_it)
 	{
@@ -50,7 +50,7 @@ Directory_tree_node::ptr Directory_tree::set_node(const boost::filesystem::path&
 	return curr_node;
 }
 
-Directory_tree_node::ptr Directory_tree::find_match(const boost::filesystem::path& query_path, const MATCH_TYPE mode)
+Directory_tree_node::ptr Directory_tree::find_match(const std::filesystem::path& query_path, const MATCH_TYPE mode)
 {
 	if( ! query_path.is_absolute() )
 	{

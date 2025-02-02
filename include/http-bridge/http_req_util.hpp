@@ -13,12 +13,12 @@
 
 #include "http-bridge/http_common.hpp"
 
-#include <boost/filesystem/path.hpp>
 
 #define NO_FCGI_DEFINES 1
 #include <fcgi_config.h>
 #include <fcgiapp.h>
 
+#include <filesystem>
 #include <map>
 #include <optional>
 #include <string>
@@ -36,7 +36,7 @@ public:
 	typedef std::map<std::string, std::optional<std::string>> Query_map;
 	bool parse_query_string(Query_map* const out_query_map);
 
-	boost::filesystem::path doc_uri_path;
+	std::filesystem::path doc_uri_path;
 	http_common::REQUEST_METHOD request_method_enum;
 
 	char const * QUERY_STRING;
