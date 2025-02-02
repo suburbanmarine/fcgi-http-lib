@@ -1,5 +1,6 @@
 add_executable(fcgi-http-lib-tests
 	http_common_tests.cpp
+	path_util_tests.cpp
 )
 
 target_link_libraries(fcgi-http-lib-tests
