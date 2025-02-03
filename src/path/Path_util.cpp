@@ -28,7 +28,7 @@ bool Path_util::trailing_element_is_dir(const std::filesystem::path& path)
 	
 	// std::cout << "path: '" << path << "' end: '" << last << "'" << std::endl;
 	
-	return (last == ".") || (last == "/") || (last.empty());
+	return (last == ".") || (last == "..") || (last == "/") || (last.empty());
 }
 
 // returns true if base_path is a parent path or identical to req_path

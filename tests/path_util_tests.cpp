@@ -17,7 +17,7 @@ TEST(Path_util, trailing_element_is_dir)
 	EXPECT_TRUE(Path_util::trailing_element_is_dir("/"));
 	EXPECT_TRUE(Path_util::trailing_element_is_dir("/."));
 
-	EXPECT_FALSE(Path_util::trailing_element_is_dir("/foo/.."));
+	EXPECT_TRUE(Path_util::trailing_element_is_dir("/foo/.."));
 	EXPECT_TRUE(Path_util::trailing_element_is_dir("/foo/bar/baz/"));
 	EXPECT_TRUE(Path_util::trailing_element_is_dir("/foo/bar/baz/."));
 	EXPECT_FALSE(Path_util::trailing_element_is_dir("/foo/bar/baz"));
