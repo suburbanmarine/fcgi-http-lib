@@ -52,18 +52,20 @@ Directory_tree_node::ptr Directory_tree::set_node(const std::filesystem::path& f
 
 Directory_tree_node::ptr Directory_tree::find_match(const std::filesystem::path& query_path, const MATCH_TYPE mode)
 {
-	if( ! query_path.is_absolute() )
+	const std::filesystem::path normal_query_path = query_path.lexically_normal();
+
+	if( ! normal_query_path.is_absolute() )
 	{
 		throw std::domain_error("query_path must be absolute path");
 	}
 
-	if( ! m_root->is_node_name(query_path.begin()->string()) )
+	if( ! m_root->is_node_name(normal_query_path.begin()->string()) )
 	{
 		return Directory_tree_node::ptr();
 	}
 
 	Directory_tree_node::ptr curr_node = m_root;
-	for(auto q_it = std::next(query_path.begin()); q_it != query_path.end(); ++q_it)
+	for(auto q_it = std::next(normal_query_path.begin()); q_it != normal_query_path.end(); ++q_it)
 	{
 		Directory_tree_node::ptr next_node = curr_node->get_child_by_name(q_it->string());
 		if( ! next_node )
@@ -84,7 +86,7 @@ Directory_tree_node::ptr Directory_tree::find_match(const std::filesystem::path&
 			case MATCH_TYPE::PARENT_PATH:
 			{
 				//exact match ok
-				if(curr_node->is_path(query_path))
+				if(curr_node->is_path(normal_query_path))
 				{
 					return curr_node;
 				}
@@ -98,7 +100,7 @@ Directory_tree_node::ptr Directory_tree::find_match(const std::filesystem::path&
 			case MATCH_TYPE::EXACT:
 			{
 				//check exact match
-				if(curr_node->is_path(query_path))
+				if(curr_node->is_path(normal_query_path))
 				{
 					return curr_node;
 				}
