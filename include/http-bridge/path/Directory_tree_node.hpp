@@ -153,15 +153,29 @@ protected:
 	{
 		m_parent    = parent;
 		m_full_path = full_path;
-		m_name      = full_path.filename().string();
+		if(full_path.empty())
+		{
+			m_name.clear();
+		}
+		else
+		{
+			m_name = std::prev(full_path.end())->string();
+		}
 	}
 
 	Directory_tree_node(const Directory_tree_node::ptr& parent, const std::filesystem::path& full_path, const Data::ptr& data)
 	{
 		m_parent    = parent;
 		m_full_path = full_path;
-		m_name      = full_path.filename().string();
-		m_data      = data;
+		if(full_path.empty())
+		{
+			m_name.clear();
+		}
+		else
+		{
+			m_name = std::prev(full_path.end())->string();
+		}
+		m_data     = data;
 	}
 
 	//For debugging, this is the full path the node was registered with

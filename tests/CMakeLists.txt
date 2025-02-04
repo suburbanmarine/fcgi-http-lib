@@ -1,4 +1,5 @@
 add_executable(fcgi-http-lib-tests
+	directory_tree_tests.cpp
 	http_common_tests.cpp
 	path_util_tests.cpp
 )
