@@ -87,6 +87,11 @@ public:
 		return m_full_path == full_path;
 	}
 
+	bool is_parent_path(const std::filesystem::path& full_path) const
+	{
+		return Path_util::is_parent_path(m_full_path, full_path);
+	}
+
 	bool is_node_name(const std::string& name) const
 	{
 		return m_name == name;
@@ -145,6 +150,11 @@ public:
 	std::shared_ptr<const T> get_data() const
 	{
 		return std::dynamic_pointer_cast<const T>(m_data);
+	}
+
+	bool has_data() const
+	{
+		return bool(m_data);
 	}
 
 protected:

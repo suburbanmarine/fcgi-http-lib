@@ -65,18 +65,26 @@ Directory_tree_node::ptr Directory_tree::find_match(const std::filesystem::path&
 	}
 
 	Directory_tree_node::ptr curr_node = m_root;
+	Directory_tree_node::ptr last_node_with_data;
+
+	if(curr_node->has_data())
+	{
+		last_node_with_data = curr_node;
+	}
+
 	for(auto q_it = std::next(normal_query_path.begin()); q_it != normal_query_path.end(); ++q_it)
 	{
+
 		Directory_tree_node::ptr next_node = curr_node->get_child_by_name(q_it->string());
 		if( ! next_node )
 		{
-			if(mode == MATCH_TYPE::PARENT_PATH)
-			{
-				curr_node = curr_node->get_child_by_name(".");
-			}
 			break;
 		}
 		curr_node = next_node;
+		if(curr_node->has_data())
+		{
+			last_node_with_data = curr_node;
+		}
 	}
 
 	if(curr_node)
@@ -85,24 +93,19 @@ Directory_tree_node::ptr Directory_tree::find_match(const std::filesystem::path&
 		{
 			case MATCH_TYPE::PARENT_PATH:
 			{
-				//exact match ok
-				if(curr_node->is_path(normal_query_path))
+				// check curr_node is parent path to query
+				if(last_node_with_data->is_parent_path(normal_query_path))
 				{
-					return curr_node;
-				}
-				//check curr_node is dir
-				if(Path_util::trailing_element_is_dir(curr_node->m_full_path))
-				{
-					return curr_node;
+					return last_node_with_data;
 				}
 				break;
 			}
 			case MATCH_TYPE::EXACT:
 			{
-				//check exact match
-				if(curr_node->is_path(normal_query_path))
+				//check exact match for last_node_with_data, to make sure we are not returning a fake internal node
+				if(last_node_with_data->is_path(normal_query_path))
 				{
-					return curr_node;
+					return last_node_with_data;
 				}
 				break;
 			}
