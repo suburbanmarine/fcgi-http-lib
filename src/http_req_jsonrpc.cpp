@@ -144,7 +144,7 @@ void http_req_jsonrpc::handle_req_post(FCGX_Request* const request, const http_r
     SPDLOG_ERROR("Response: Empty");
   }
 
-  if(true)
+  if(false)
   {
     // TODO tighten scope of Access-Control-Allow-Origin
     FCGX_PutS("Access-Control-Allow-Origin: *\r\n"            , request->out);
